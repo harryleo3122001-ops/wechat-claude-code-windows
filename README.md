@@ -61,7 +61,7 @@ git clone https://github.com/harryleo3122001-ops/wechat-claude-code-windows.git 
 cd ~/.claude/skills/wechat-claude-code
 npm install
 
-# Windows (PowerShell)
+# Windows (管理员：PowerShell)
 git clone https://github.com/harryleo3122001-ops/wechat-claude-code-windows.git $env:USERPROFILE\.claude\skills\wechat-claude-code
 cd $env:USERPROFILE\.claude\skills\wechat-claude-code
 npm install
@@ -69,7 +69,7 @@ npm install
 
 `postinstall` 自动编译 TypeScript。
 
-## 快速开始
+## 快速开始（Windows需要管理员权限）
 
 ### 1. 首次设置
 
