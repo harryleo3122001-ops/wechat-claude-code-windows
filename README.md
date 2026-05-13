@@ -57,12 +57,12 @@
 
 ```bash
 # macOS / Linux
-git clone https://github.com/Wechat-ggGitHub/wechat-claude-code.git ~/.claude/skills/wechat-claude-code
+git clone https://github.com/harryleo3122001-ops/wechat-claude-code-windows.git ~/.claude/skills/wechat-claude-code
 cd ~/.claude/skills/wechat-claude-code
 npm install
 
 # Windows (PowerShell)
-git clone https://github.com/Wechat-ggGitHub/wechat-claude-code.git $env:USERPROFILE\.claude\skills\wechat-claude-code
+git clone https://github.com/harryleo3122001-ops/wechat-claude-code-windows.git $env:USERPROFILE\.claude\skills\wechat-claude-code
 cd $env:USERPROFILE\.claude\skills\wechat-claude-code
 npm install
 ```
