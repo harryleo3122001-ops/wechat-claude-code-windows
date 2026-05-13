@@ -25,7 +25,7 @@ const HELP_TEXT = `可用命令：
 其他：
   /skills [full]    列出已安装的 skill（full 显示描述）
   /version          查看版本信息
-  /<skill> [参数]   触发已安装的 skill
+  /<skill>          触发已安装的 skill
 
 直接输入文字即可与 Claude Code 对话`;
 
