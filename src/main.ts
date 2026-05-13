@@ -153,7 +153,7 @@ async function runSetup(): Promise<void> {
   config.workingDirectory = workingDir;
   saveConfig(config);
 
-  console.log('运行 npm run daemon -- start 启动服务');
+  console.log('请启动服务');
 }
 
 // ---------------------------------------------------------------------------
