@@ -1,0 +1,84 @@
+import { readFileSync, writeFileSync, mkdirSync, chmodSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { EOL, homedir } from "node:os";
+import { DATA_DIR } from "./constants.js";
+
+export interface Config {
+  workingDirectory: string;
+  model?: string;
+  permissionMode?: "default" | "acceptEdits" | "plan" | "auto";
+  systemPrompt?: string;
+}
+
+const CONFIG_PATH = join(DATA_DIR, "config.env");
+
+const DEFAULT_CONFIG: Config = {
+  workingDirectory: homedir(),
+};
+
+function ensureConfigDir(): void {
+  mkdirSync(DATA_DIR, { recursive: true });
+}
+
+function parseConfigFile(content: string): Config {
+  const config: Config = { ...DEFAULT_CONFIG };
+  for (const line of content.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eqIndex = trimmed.indexOf("=");
+    if (eqIndex === -1) continue;
+    const key = trimmed.slice(0, eqIndex).trim();
+    const value = trimmed.slice(eqIndex + 1).trim();
+    switch (key) {
+      case "workingDirectory":
+        config.workingDirectory = value;
+        break;
+      case "model":
+        config.model = value;
+        break;
+      case "permissionMode":
+        if (
+          value === "default" ||
+          value === "acceptEdits" ||
+          value === "plan" ||
+          value === "auto"
+        ) {
+          config.permissionMode = value;
+        }
+        break;
+      case "systemPrompt":
+        config.systemPrompt = value;
+        break;
+    }
+  }
+  return config;
+}
+
+export function loadConfig(): Config {
+  try {
+    const content = readFileSync(CONFIG_PATH, "utf-8");
+    return parseConfigFile(content);
+  } catch {
+    // File does not exist yet — return defaults
+    return { ...DEFAULT_CONFIG };
+  }
+}
+
+export function saveConfig(config: Config): void {
+  ensureConfigDir();
+  const lines: string[] = [];
+  lines.push(`workingDirectory=${config.workingDirectory}`);
+  if (config.model) {
+    lines.push(`model=${config.model}`);
+  }
+  if (config.permissionMode) {
+    lines.push(`permissionMode=${config.permissionMode}`);
+  }
+  if (config.systemPrompt) {
+    lines.push(`systemPrompt=${config.systemPrompt}`);
+  }
+  writeFileSync(CONFIG_PATH, lines.join(EOL) + EOL, "utf-8");
+  if (![ 'cygwin', 'msys', 'win32' ].includes(process.platform)) {
+    try { chmodSync(CONFIG_PATH, 0o600); } catch { /* Windows / read-only FS — ignore */ }
+  }
+}
