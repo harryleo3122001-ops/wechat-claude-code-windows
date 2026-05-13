@@ -152,6 +152,11 @@ wechat-claude-code/
 npm run dev    # 监听模式，TS 变更自动编译
 npm run build  # 编译 TypeScript
 ```
+## windows调试时可以这样快捷启动
+
+```bash
+node dist/main.js start  # 不经过 Task Scheduler，直接启动 Node 进程
+```
 
 ## License
 
